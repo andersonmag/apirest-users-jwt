@@ -1,57 +1,28 @@
 package com.example.apirestful;
 
-import java.util.List;
-import javax.validation.Valid;
 import com.example.apirestful.model.Contact;
-import com.example.apirestful.repository.ContactRepository;
+import com.example.apirestful.service.ContactService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @SpringBootApplication
-public class DemoApplication {
+public class DemoApplication implements CommandLineRunner {
 
-	ContactRepository contactRepository;
-
-	public DemoApplication(ContactRepository contactRepository) {
-		this.contactRepository = contactRepository;
-		contactRepository.save(new Contact("Junior", "(11) 4002-8922"));
-		contactRepository.save(new Contact("Anderson", "(82) 99966-8440"));
-	}
-
-	@GetMapping
-	public List<Contact> getAll() {
-		return contactRepository.findAll();
-	}
-
-	@PostMapping("/save")
-	public Contact save(@Valid @RequestBody Contact contact) {
-		return contactRepository.save(contact);
-	}
-
-	@PutMapping("/save")
-	public Contact update(@Valid @RequestBody Contact contact) {
-		return contactRepository.save(contact);
-	}
-
-	@GetMapping("/{number}")
-	public List<Contact> searchByNumber(@PathVariable String number) {
-		return contactRepository.findByNumberContaining(number);
-	}
-
-	@DeleteMapping("/{number}")
-	public void delete(@PathVariable String number) {
-		contactRepository.deleteByNumber(number);
-	}
+	@Autowired
+	ContactService contactService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		contactService.save(new Contact("Pai de Familia", "(11) 4002-8922"));
+		contactService.save(new Contact("Cascão", "(23) 4002-2343"));
+		contactService.save(new Contact("Greg", "(22) 4354-3535"));
+		contactService.save(new Contact("Logan", "(82) 9823-2343"));
+		contactService.save(new Contact("Mr. Frog", "(42) 5685-5646"));
 	}
 }
