@@ -1,16 +1,24 @@
 package com.example.apirestful.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import org.springframework.lang.Nullable;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 public class Contact {
 
     @Id
     @GeneratedValue
+    @ApiModelProperty(value = "Id do Contato")
     private Long id;
+    @ApiModelProperty(value = "Nome do Contato")
     private String name;
+    @ApiModelProperty(value = "Número do Contato")
+    @Nullable
+    @Column(unique = true)
     private String number;
 
     public Contact() {}
