@@ -19,11 +19,11 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors.basePackage("com.example.apirestful.controller"))
-                .paths(PathSelectors.any()).build().apiInfo(apiInfo());
+                .paths(PathSelectors.regex("/v2/usuario.*")).build().apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("REST API Contacts").description("API Rest de Usuarios para fins de estudo.")
+        return new ApiInfoBuilder().title("REST API Usuarios").description("API Rest de Usuarios para fins de estudo.")
                 .version("1.0.0").license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
                 .contact(new Contact("Anderson", "https://github.com/andersonmag", "adnrepper@gmail.com")).build();
