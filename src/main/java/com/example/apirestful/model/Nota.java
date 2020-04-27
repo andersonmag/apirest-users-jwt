@@ -1,6 +1,8 @@
 package com.example.apirestful.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,13 +14,14 @@ import org.hibernate.annotations.ForeignKey;
 public class Nota {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(insertable = false, updatable = false)
     private Long id;
     private String materia;
     private int valor;
 
     @JsonIgnore
     @ForeignKey(name = "usuario_id")
-    @ManyToOne
+    @ManyToOne(targetEntity = Usuario.class, optional = false, fetch = FetchType.EAGER)
     private Usuario usuario;
 
     public Long getId() {
