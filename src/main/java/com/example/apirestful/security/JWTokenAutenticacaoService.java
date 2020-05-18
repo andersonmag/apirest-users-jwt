@@ -50,6 +50,9 @@ public class JWTokenAutenticacaoService {
         /* Adiciona no cabeçalho HTTP/Navegador | Envio */
         response.addHeader(HEADER_STRING, TOKEN_FINAL); /* Authorization : Bearer iauidahwkdhahiuh7333q7ty7tetga */
 
+        /*Habilitando a resposta */
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        
         /* Escreve TOKEN como resposta para o corpo HTTP */
         response.getWriter().write("{\"Authorization\": \"" + TOKEN_FINAL
                 + "\"}"); /* "Authorization" : "Bearer iauidahwkdhahiuh7333q7ty7tetga" */
@@ -58,7 +61,7 @@ public class JWTokenAutenticacaoService {
 
     /* Validando usuario, das próximas vezes, após ter gerado token */
     /* Retorna o usuario validado com token ou caso não seja valido, retorna null */
-    public Authentication validarTokenAuthentication(HttpServletRequest request) {
+    public Authentication validarTokenAuthentication(HttpServletRequest request, HttpServletResponse response) {
 
         /* Pega o token enviado no cabeçalho HTTP/Navegador */
         String token = request.getHeader(HEADER_STRING);
@@ -92,7 +95,8 @@ public class JWTokenAutenticacaoService {
                 }
             }
         }
-
+         
+        response.addHeader("Access-Control-Allow-Origin", "*");
         return null;
     }
 }
